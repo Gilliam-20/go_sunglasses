@@ -1,0 +1,45 @@
+name: go_eyewear
+description: "GO! Eyewear — sunglasses built for velocity. Flutter Web + GetX."
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0-209.1.beta
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.7.2
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Fraunces
+      fonts:
+        - asset: assets/fonts/Fraunces-Regular.ttf
+        - asset: assets/fonts/Fraunces-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/Fraunces-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Fraunces-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Fraunces-Italic.ttf
+          weight: 500
+          style: italic
+    - family: ArchivoBlack
+      fonts:
+        - asset: assets/fonts/ArchivoBlack-Regular.ttf
+    - family: Jost
+      fonts:
+        - asset: assets/fonts/Jost-Regular.ttf
+        - asset: assets/fonts/Jost-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Jost-SemiBold.ttf
+          weight: 600
