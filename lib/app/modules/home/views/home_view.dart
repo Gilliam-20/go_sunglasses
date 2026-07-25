@@ -306,12 +306,11 @@ class _ShapeGrid extends StatelessWidget {
           const SizedBox(height: 32),
           GridView.builder(
             shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(vertical: 12),
             physics: const NeverScrollableScrollPhysics(),
             itemCount: _shapes.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: columns,
-              mainAxisSpacing: 24,
+              mainAxisSpacing: 32,
               crossAxisSpacing: 24,
               childAspectRatio: columns == 4 ? 0.82 : 0.95,
             ),
