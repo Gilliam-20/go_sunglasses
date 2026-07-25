@@ -77,6 +77,7 @@ class _ProductCardState extends State<ProductCard> {
               Text(p.material, style: AppTypography.caption()),
               const SizedBox(height: 6),
               Text(p.formattedPrice, style: AppTypography.price()),
+              const SizedBox(height: 12),
             ],
           ),
         ),
