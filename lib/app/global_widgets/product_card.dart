@@ -27,7 +27,7 @@ class _ProductCardState extends State<ProductCard> {
       child: GestureDetector(
         onTap: () => Get.toNamed(Routes.productDetailPath(p.id)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
