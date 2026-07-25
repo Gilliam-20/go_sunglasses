@@ -24,7 +24,10 @@ class _ValueBlock extends StatelessWidget {
         const SizedBox(height: 18),
         Text(title, style: AppTypography.kinetic(size: 14)),
         const SizedBox(height: 12),
-        Text(body, style: AppTypography.body(color: AppColors.ink.withOpacity(0.7))),
+        Text(
+          body,
+          style: AppTypography.body(color: AppColors.ink.withOpacity(0.7)),
+        ),
       ],
     );
   }
@@ -36,17 +39,20 @@ class AboutView extends StatelessWidget {
   static const _values = [
     (
       title: 'MOTION FIRST',
-      body: 'Every frame is tested while walking, not standing at a mirror — '
+      body:
+          'Every frame is tested while walking, not standing at a mirror — '
           'balance is only approved once it holds at a full stride.',
     ),
     (
       title: 'HONEST MATERIAL',
-      body: 'Titanium and acetate sourced for how they hold up, not just '
+      body:
+          'Titanium and acetate sourced for how they hold up, not just '
           'how they photograph on a display stand.',
     ),
     (
       title: 'ONE ACCENT',
-      body: 'Signal Red appears once per frame, never more — '
+      body:
+          'Signal Red appears once per frame, never more — '
           'restraint is the house\'s only rule.',
     ),
   ];
@@ -70,7 +76,14 @@ class AboutView extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    GoImage(url: UnsplashPhotos.sized(UnsplashPhotos.bwPortraitWithHat, width: 1600, height: 1000, grayscale: true)),
+                    GoImage(
+                      url: UnsplashPhotos.sized(
+                        UnsplashPhotos.bwPortraitWithHat,
+                        width: 1600,
+                        height: 1000,
+                        grayscale: true,
+                      ),
+                    ),
                     Container(color: AppColors.ink.withOpacity(0.6)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: gutter),
@@ -78,11 +91,17 @@ class AboutView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SectionLabel(text: 'THE MANIFESTO', color: AppColors.bone),
+                          const SectionLabel(
+                            text: 'THE MANIFESTO',
+                            color: AppColors.bone,
+                          ),
                           const SizedBox(height: 20),
                           Text(
                             'STILLNESS\nISN\'T\nLUXURY.',
-                            style: AppTypography.display(color: AppColors.bone, size: isDesktop ? 76 : 46),
+                            style: AppTypography.display(
+                              color: AppColors.bone,
+                              size: isDesktop ? 76 : 46,
+                            ),
                           ),
                         ],
                       ),
@@ -105,10 +124,19 @@ class AboutView extends StatelessWidget {
                         'survive a run for a train, a sprint across a wet pavement, a '
                         'full day in motion, doesn\'t survive here."',
                         textAlign: TextAlign.center,
-                        style: AppTypography.serifBody(size: 22, color: AppColors.ink.withOpacity(0.85)),
+                        style: AppTypography.serifBody(
+                          size: 22,
+                          color: AppColors.ink.withOpacity(0.85),
+                        ),
                       ),
                       const SizedBox(height: 20),
-                      Text('— FOUNDER\'S NOTE', style: AppTypography.kinetic(size: 12, color: AppColors.steel)),
+                      Text(
+                        '— GILLIAM\'S NOTE',
+                        style: AppTypography.kinetic(
+                          size: 12,
+                          color: AppColors.steel,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -125,24 +153,36 @@ class AboutView extends StatelessWidget {
                   if (isDesktop)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _values
-                          .map((v) => Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 40),
-                                  child: _ValueBlock(title: v.title, body: v.body),
+                      children:
+                          _values
+                              .map(
+                                (v) => Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 40),
+                                    child: _ValueBlock(
+                                      title: v.title,
+                                      body: v.body,
+                                    ),
+                                  ),
                                 ),
-                              ))
-                          .toList(),
+                              )
+                              .toList(),
                     )
                   else
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _values
-                          .map((v) => Padding(
-                                padding: const EdgeInsets.only(bottom: 32),
-                                child: _ValueBlock(title: v.title, body: v.body),
-                              ))
-                          .toList(),
+                      children:
+                          _values
+                              .map(
+                                (v) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 32),
+                                  child: _ValueBlock(
+                                    title: v.title,
+                                    body: v.body,
+                                  ),
+                                ),
+                              )
+                              .toList(),
                     ),
                 ],
               ),
