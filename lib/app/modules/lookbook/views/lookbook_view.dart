@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../data/unsplash_photos.dart';
 import '../../../global_widgets/go_image.dart';
 import '../../../global_widgets/nav_bar.dart';
 import '../../../global_widgets/responsive.dart';
@@ -69,7 +70,7 @@ class LookbookView extends GetView<LookbookController> {
                               height: height,
                               width: double.infinity,
                               child: GoImage(
-                                url: 'https://picsum.photos/seed/${colSeeds[i]}/800/${height.toInt() * 2}?grayscale',
+                                url: UnsplashPhotos.sized(colSeeds[i], width: 800, height: height.toInt() * 2, grayscale: true),
                               ),
                             ),
                           );

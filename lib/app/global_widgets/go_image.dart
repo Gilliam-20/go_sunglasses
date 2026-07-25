@@ -5,16 +5,20 @@ import '../theme/app_colors.dart';
 /// so a slow or unreachable image never breaks the layout.
 ///
 /// NOTE ON IMAGE SOURCES — read this before launch:
-/// Every photo on the site is loaded live from https://picsum.photos using
-/// a named seed (see `ProductModel.imageUrl`). Picsum is a free, royalty-free
-/// placeholder photo service — it guarantees the app renders real
-/// photography out of the box, but the images are NOT curated fashion
-/// campaign shots. Before shipping, replace the seeds in
-/// `product_repository.dart` and the hero/lookbook seeds in
-/// `home_controller.dart` / `lookbook_controller.dart` with your own
-/// hosted product photography URLs (Firebase Storage, Cloudinary, etc).
-/// Because every image is resolved through this one widget, swapping the
-/// source later only means changing the URL strings, not this file.
+/// Every photo on the site is real sunglasses photography from Unsplash
+/// (images.unsplash.com), loaded live over the network — see
+/// `lib/app/data/unsplash_photos.dart` for the full registry, source
+/// credits, and the `sized()` helper that applies width/height/crop/
+/// grayscale via query params. Every image is confirmed "Free to use
+/// under the Unsplash License" (free for commercial use, no attribution
+/// legally required), but it's free stock photography, not per-SKU
+/// product shoots — several products intentionally share a photo where
+/// only one clean shot of that frame shape was available. Before
+/// shipping, replace the URLs in `unsplash_photos.dart` with your own
+/// hosted product photography (Firebase Storage, Cloudinary, etc) — see
+/// README.md for exactly which lines to touch. Because every image is
+/// resolved through this one widget, swapping the source later only
+/// means changing URL strings, not this file.
 class GoImage extends StatelessWidget {
   final String url;
   final BoxFit fit;

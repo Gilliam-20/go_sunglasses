@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/product_model.dart';
+import '../../../data/unsplash_photos.dart';
 import '../../../global_widgets/go_image.dart';
 import '../../../global_widgets/nav_bar.dart';
 import '../../../global_widgets/responsive.dart';
@@ -16,7 +17,7 @@ class FindYourFitView extends StatelessWidget {
   static const _guide = [
     (
       faceShape: 'ROUND',
-      seed: 'go-eyewear-face-round',
+      photoUrl: UnsplashPhotos.wayfarerFlatlay,
       recommends: FrameShape.rectangle,
       recommendLabel: 'RECTANGLE',
       note: 'Soft, even features benefit from a frame with sharp, '
@@ -25,7 +26,7 @@ class FindYourFitView extends StatelessWidget {
     ),
     (
       faceShape: 'SQUARE',
-      seed: 'go-eyewear-face-square',
+      photoUrl: UnsplashPhotos.roundOnBlueCircle,
       recommends: FrameShape.round,
       recommendLabel: 'ROUND',
       note: 'A strong jawline reads best against curves. Round frames '
@@ -33,7 +34,7 @@ class FindYourFitView extends StatelessWidget {
     ),
     (
       faceShape: 'OVAL',
-      seed: 'go-eyewear-face-oval',
+      photoUrl: UnsplashPhotos.auroraAviatorSilver,
       recommends: FrameShape.aviator,
       recommendLabel: 'AVIATOR',
       note: 'Balanced proportions mean an oval face carries almost '
@@ -42,7 +43,7 @@ class FindYourFitView extends StatelessWidget {
     ),
     (
       faceShape: 'HEART',
-      seed: 'go-eyewear-face-heart',
+      photoUrl: UnsplashPhotos.catEyeBlueFramed,
       recommends: FrameShape.catEye,
       recommendLabel: 'CAT-EYE',
       note: 'A narrower chin pairs well with a frame that\'s widest at '
@@ -101,7 +102,7 @@ class FindYourFitView extends StatelessWidget {
                   final g = _guide[i];
                   return _FaceShapeCard(
                     faceShape: g.faceShape,
-                    seed: g.seed,
+                    photoUrl: g.photoUrl,
                     recommendLabel: g.recommendLabel,
                     recommends: g.recommends,
                     note: g.note,
@@ -120,14 +121,14 @@ class FindYourFitView extends StatelessWidget {
 
 class _FaceShapeCard extends StatelessWidget {
   final String faceShape;
-  final String seed;
+  final String photoUrl;
   final String recommendLabel;
   final FrameShape recommends;
   final String note;
 
   const _FaceShapeCard({
     required this.faceShape,
-    required this.seed,
+    required this.photoUrl,
     required this.recommendLabel,
     required this.recommends,
     required this.note,
@@ -142,7 +143,7 @@ class _FaceShapeCard extends StatelessWidget {
         children: [
           Expanded(
             flex: 4,
-            child: GoImage(url: 'https://picsum.photos/seed/$seed/500/700?grayscale'),
+            child: GoImage(url: UnsplashPhotos.sized(photoUrl, width: 500, height: 700, grayscale: true)),
           ),
           Expanded(
             flex: 6,

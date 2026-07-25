@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/product_model.dart';
+import '../unsplash_photos.dart';
 import '../../theme/app_colors.dart';
 
 /// Data source for the GO! Eyewear catalog.
@@ -29,25 +30,24 @@ class ProductRepository extends GetxService {
 
   ProductModel byId(String id) => _catalog.firstWhere((p) => p.id == id);
 
-  List<String> get lookbookSeeds => List.generate(8, (i) => 'go-eyewear-lookbook-${i + 1}');
+  /// Lookbook rotates through the full licensed photo pool for variety.
+  List<String> get lookbookSeeds => UnsplashPhotos.all;
 
   // Shared swatch colors, reused across frames the way real color chips do.
-  static const _inkBlack = FrameColor(name: 'Ink Black', swatch: AppColors.ink, imageSeed: '');
-  static const _chrome = FrameColor(name: 'Chrome', swatch: AppColors.chrome, imageSeed: '');
-  static const _gunmetal = FrameColor(name: 'Gunmetal', swatch: Color(0xFF3A3B3C), imageSeed: '');
-  static const _tortoise = FrameColor(name: 'Tortoise', swatch: Color(0xFF8B5A2B), imageSeed: '');
-  static const _gold = FrameColor(name: 'Gold', swatch: Color(0xFFD4AF37), imageSeed: '');
-  static const _bone = FrameColor(name: 'Bone', swatch: AppColors.bone, imageSeed: '');
-  static const _signalTip = FrameColor(name: 'Signal Red Tip', swatch: AppColors.signal, imageSeed: '');
+  static const _inkBlack = Color(0xFF0D0D0D);
+  static const _chrome = Color(0xFFC9C9C2);
+  static const _gunmetal = Color(0xFF3A3B3C);
+  static const _tortoise = Color(0xFF8B5A2B);
+  static const _gold = Color(0xFFD4AF37);
+  static const _bone = Color(0xFFF2EEE6);
+  static const _signal = AppColors.signal;
 
-  List<FrameColor> _colors(String productId, List<FrameColor> base) {
-    return base
-        .map((c) => FrameColor(
-              name: c.name,
-              swatch: c.swatch,
-              imageSeed: '$productId-${c.name.toLowerCase().replaceAll(' ', '-').replaceAll('/', '-')}',
-            ))
-        .toList();
+  /// Every colorway of a given product points at the SAME licensed stock
+  /// photo — free stock photography isn't shot per-SKU-per-color, so
+  /// this is an honest placeholder. Swap in real per-color product
+  /// photography before launch (see README.md).
+  List<FrameColor> _colors(String photoUrl, List<({String name, Color swatch})> base) {
+    return base.map((c) => FrameColor(name: c.name, swatch: c.swatch, photoBaseUrl: photoUrl)).toList();
   }
 
   List<ProductModel> _buildCatalog() => [
@@ -62,7 +62,11 @@ class ProductRepository extends GetxService {
               'A double-bridge titanium aviator, weighted for balance so it '
               'doesn\'t slide when you move. Polarized glass cuts glare '
               'without dulling color.',
-          colors: _colors('velocity-aviator', [_chrome, _inkBlack, _gunmetal]),
+          colors: _colors(UnsplashPhotos.auroraAviatorGold, [
+            (name: 'Chrome', swatch: _chrome),
+            (name: 'Ink Black', swatch: _inkBlack),
+            (name: 'Gunmetal', swatch: _gunmetal),
+          ]),
         ),
         ProductModel(
           id: 'signal-aviator',
@@ -74,7 +78,10 @@ class ProductRepository extends GetxService {
               'The house aviator, cut narrower through the brow than most. '
               'A gradient lens fades from ink to clear — dark enough for '
               'noon, light enough for everywhere after.',
-          colors: _colors('signal-aviator', [_gold, _inkBlack]),
+          colors: _colors(UnsplashPhotos.auroraAviatorSilver, [
+            (name: 'Gold', swatch: _gold),
+            (name: 'Ink Black', swatch: _inkBlack),
+          ]),
         ),
         ProductModel(
           id: 'ink-aviator',
@@ -85,7 +92,10 @@ class ProductRepository extends GetxService {
           description:
               'A featherweight steel build with a flat mirrored lens — '
               'the aviator built for a full day of motion, not a photo op.',
-          colors: _colors('ink-aviator', [_inkBlack, _chrome]),
+          colors: _colors(UnsplashPhotos.auroraAviatorGold, [
+            (name: 'Ink Black', swatch: _inkBlack),
+            (name: 'Chrome', swatch: _chrome),
+          ]),
         ),
 
         // ROUND
@@ -99,7 +109,10 @@ class ProductRepository extends GetxService {
               'A true circle in hand-finished acetate, ground thin at the '
               'temple so it never feels heavy. The quiet piece that makes '
               'everything else look intentional.',
-          colors: _colors('motion-round', [_tortoise, _inkBlack]),
+          colors: _colors(UnsplashPhotos.roundOrangeMotion, [
+            (name: 'Tortoise', swatch: _tortoise),
+            (name: 'Ink Black', swatch: _inkBlack),
+          ]),
         ),
         ProductModel(
           id: 'kinetic-round',
@@ -111,7 +124,10 @@ class ProductRepository extends GetxService {
               'The round shape rebuilt in titanium instead of acetate — '
               'a third of the weight, none of the fragility, polarized '
               'against glare off water and glass.',
-          colors: _colors('kinetic-round', [_chrome, _bone]),
+          colors: _colors(UnsplashPhotos.roundOnBlueCircle, [
+            (name: 'Chrome', swatch: _chrome),
+            (name: 'Bone', swatch: _bone),
+          ]),
         ),
         ProductModel(
           id: 'ember-round',
@@ -123,7 +139,10 @@ class ProductRepository extends GetxService {
               'Tortoise acetate with a single Signal Red tip at the temple '
               '— the brand mark, worn quietly. Gradient lens, warm at '
               'the base.',
-          colors: _colors('ember-round', [_tortoise, _signalTip]),
+          colors: _colors(UnsplashPhotos.roundOnBlueCircle, [
+            (name: 'Tortoise', swatch: _tortoise),
+            (name: 'Signal Red Tip', swatch: _signal),
+          ]),
         ),
 
         // CAT-EYE
@@ -136,7 +155,10 @@ class ProductRepository extends GetxService {
           description:
               'A cat-eye with a sharper lift than most — drafted the same '
               'way we draft a blazer shoulder, structured but never stiff.',
-          colors: _colors('velocity-cat-eye', [_inkBlack, _tortoise]),
+          colors: _colors(UnsplashPhotos.catEyeBlueFramed, [
+            (name: 'Ink Black', swatch: _inkBlack),
+            (name: 'Tortoise', swatch: _tortoise),
+          ]),
         ),
         ProductModel(
           id: 'signal-cat-eye',
@@ -148,7 +170,10 @@ class ProductRepository extends GetxService {
               'A fine metal browline sits over an acetate base, catching '
               'light the way the Signal Bag\'s stitch does — a small, '
               'considered flash of hardware.',
-          colors: _colors('signal-cat-eye', [_bone, _inkBlack]),
+          colors: _colors(UnsplashPhotos.catEyeBlueFramed, [
+            (name: 'Bone', swatch: _bone),
+            (name: 'Ink Black', swatch: _inkBlack),
+          ]),
         ),
         ProductModel(
           id: 'motion-cat-eye',
@@ -159,7 +184,10 @@ class ProductRepository extends GetxService {
           description:
               'The everyday cat-eye — lightweight acetate, a gentler lift, '
               'built to live in a bag and come out looking pressed anyway.',
-          colors: _colors('motion-cat-eye', [_tortoise, _chrome]),
+          colors: _colors(UnsplashPhotos.catEyeBlueFramed, [
+            (name: 'Tortoise', swatch: _tortoise),
+            (name: 'Chrome', swatch: _chrome),
+          ]),
         ),
 
         // RECTANGLE
@@ -172,7 +200,10 @@ class ProductRepository extends GetxService {
           description:
               'A clean rectangle in brushed titanium — the same restraint '
               'as the Steel Suit, cut close and finished without excess.',
-          colors: _colors('steel-rectangle', [_gunmetal, _chrome]),
+          colors: _colors(UnsplashPhotos.sunglassesInBox, [
+            (name: 'Gunmetal', swatch: _gunmetal),
+            (name: 'Chrome', swatch: _chrome),
+          ]),
         ),
         ProductModel(
           id: 'ink-rectangle',
@@ -183,7 +214,10 @@ class ProductRepository extends GetxService {
           description:
               'A wide rectangular acetate frame with a low bridge — built '
               'for a face that wants coverage without bulk.',
-          colors: _colors('ink-rectangle', [_inkBlack, _tortoise]),
+          colors: _colors(UnsplashPhotos.wayfarerFlatlay, [
+            (name: 'Ink Black', swatch: _inkBlack),
+            (name: 'Tortoise', swatch: _tortoise),
+          ]),
         ),
         ProductModel(
           id: 'kinetic-rectangle',
@@ -195,7 +229,10 @@ class ProductRepository extends GetxService {
               'Slightly softened corners keep this rectangle from reading '
               'severe. Titanium hinges are rated for motion, not just '
               'display-case stillness.',
-          colors: _colors('kinetic-rectangle', [_chrome, _inkBlack]),
+          colors: _colors(UnsplashPhotos.sunglassesInBox, [
+            (name: 'Chrome', swatch: _chrome),
+            (name: 'Ink Black', swatch: _inkBlack),
+          ]),
         ),
       ];
 }

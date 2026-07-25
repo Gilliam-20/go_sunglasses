@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/product_model.dart';
+import '../../../data/unsplash_photos.dart';
 import '../../../global_widgets/diagonal_clipper.dart';
 import '../../../global_widgets/go_button.dart';
 import '../../../global_widgets/go_image.dart';
@@ -31,13 +32,7 @@ class HomeView extends GetView<HomeController> {
               children: [
                 _Hero(),
                 const VelocityTicker(
-                  words: [
-                    'UV400',
-                    'POLARIZED',
-                    'GO!',
-                    'NO STANDING STILL',
-                    'GO!',
-                  ],
+                  words: ['UV400', 'POLARIZED', 'GO!', 'NO STANDING STILL', 'GO!'],
                 ),
                 _Manifesto(),
                 _ShapeGrid(),
@@ -48,15 +43,13 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           ),
-          Obx(
-            () => AnimatedContainer(
-              duration: const Duration(milliseconds: 220),
-              child: NavBar(
-                transparent: !controller.solidNav.value,
-                light: !controller.solidNav.value,
-              ),
-            ),
-          ),
+          Obx(() => AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                child: NavBar(
+                  transparent: !controller.solidNav.value,
+                  light: !controller.solidNav.value,
+                ),
+              )),
         ],
       ),
     );
@@ -74,10 +67,8 @@ class _HeroState extends State<_Hero> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _anim = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    )..forward();
+    _anim = AnimationController(vsync: this, duration: const Duration(milliseconds: 900))
+      ..forward();
   }
 
   @override
@@ -100,9 +91,8 @@ class _HeroState extends State<_Hero> with SingleTickerProviderStateMixin {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            const GoImage(
-              url:
-                  'https://i.pinimg.com/736x/c1/73/bd/c173bd84481e535bde1f446862e950d6.jpg',
+            GoImage(
+              url: UnsplashPhotos.sized(HomeController.heroImageUrl, width: 1800, height: 1400, grayscale: true),
             ),
             Container(
               decoration: BoxDecoration(
@@ -124,19 +114,14 @@ class _HeroState extends State<_Hero> with SingleTickerProviderStateMixin {
                 children: [
                   FadeTransition(
                     opacity: fade,
-                    child: const SectionLabel(
-                      text: 'GO! EYEWEAR — SS26',
-                      color: AppColors.bone,
-                    ),
+                    child: const SectionLabel(text: 'GO! EYEWEAR — SS26', color: AppColors.bone),
                   ),
                   const SizedBox(height: 22),
                   FadeTransition(
                     opacity: fade,
                     child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, 0.08),
-                        end: Offset.zero,
-                      ).animate(fade),
+                      position: Tween<Offset>(begin: const Offset(0, 0.08), end: Offset.zero)
+                          .animate(fade),
                       child: Text(
                         'MOVEMENT\nIS THE ONLY\nLUXURY.',
                         style: AppTypography.display(
@@ -155,10 +140,7 @@ class _HeroState extends State<_Hero> with SingleTickerProviderStateMixin {
                         'GO! designs for people who don\'t stand still — frames '
                         'and lenses cut with the balance and clarity to move as '
                         'fast as you do.',
-                        style: AppTypography.body(
-                          color: AppColors.chrome,
-                          size: 15,
-                        ),
+                        style: AppTypography.body(color: AppColors.chrome, size: 15),
                       ),
                     ),
                   ),
@@ -205,10 +187,7 @@ class _Manifesto extends StatelessWidget {
             'stillness. Every frame in this house is drafted first for '
             'motion, then for form — the fit is only finished once it holds '
             'up at a full stride.',
-            style: AppTypography.serifBody(
-              color: AppColors.ink.withOpacity(0.75),
-              size: 18,
-            ),
+            style: AppTypography.serifBody(color: AppColors.ink.withOpacity(0.75), size: 18),
           ),
         ),
         const SizedBox(height: 28),
@@ -224,64 +203,42 @@ class _Manifesto extends StatelessWidget {
       clipper: const DiagonalTopClipper(dropFraction: 0.06),
       child: AspectRatio(
         aspectRatio: 4 / 5,
-        child: const GoImage(
-          url: 'https://picsum.photos/seed/go-eyewear-about-story/900/1100',
-        ),
+        child: GoImage(url: UnsplashPhotos.sized(UnsplashPhotos.onWoodenTable, width: 900, height: 1100)),
       ),
     );
 
     return Container(
       color: AppColors.bone,
       padding: EdgeInsets.symmetric(horizontal: gutter, vertical: 96),
-      child:
-          isDesktop
-              ? Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(flex: 6, child: textContent),
-                  const SizedBox(width: 64),
-                  Expanded(flex: 5, child: imageContent),
-                ],
-              )
-              : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  textContent,
-                  const SizedBox(height: 48),
-                  imageContent,
-                ],
-              ),
+      child: isDesktop
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(flex: 6, child: textContent),
+                const SizedBox(width: 64),
+                Expanded(flex: 5, child: imageContent),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [textContent, const SizedBox(height: 48), imageContent],
+            ),
     );
   }
 }
 
 class _ShapeGrid extends StatelessWidget {
   static const _shapes = [
-    (
-      label: 'AVIATOR',
-      seed: 'go-eyewear-shape-aviator',
-      shape: FrameShape.aviator,
-    ),
-    (label: 'ROUND', seed: 'go-eyewear-shape-round', shape: FrameShape.round),
-    (
-      label: 'CAT-EYE',
-      seed: 'go-eyewear-shape-cat-eye',
-      shape: FrameShape.catEye,
-    ),
-    (
-      label: 'RECTANGLE',
-      seed: 'go-eyewear-shape-rectangle',
-      shape: FrameShape.rectangle,
-    ),
+    (label: 'AVIATOR', photoUrl: UnsplashPhotos.auroraAviatorGold, shape: FrameShape.aviator),
+    (label: 'ROUND', photoUrl: UnsplashPhotos.roundOrangeMotion, shape: FrameShape.round),
+    (label: 'CAT-EYE', photoUrl: UnsplashPhotos.catEyeBlueFramed, shape: FrameShape.catEye),
+    (label: 'RECTANGLE', photoUrl: UnsplashPhotos.sunglassesInBox, shape: FrameShape.rectangle),
   ];
 
   @override
   Widget build(BuildContext context) {
     final gutter = Responsive.gutter(context);
-    final columns =
-        Responsive.isDesktop(context)
-            ? 4
-            : (Responsive.isTablet(context) ? 2 : 2);
+    final columns = Responsive.isDesktop(context) ? 4 : (Responsive.isTablet(context) ? 2 : 2);
 
     return Container(
       color: AppColors.bone,
@@ -303,7 +260,7 @@ class _ShapeGrid extends StatelessWidget {
             ),
             itemBuilder: (context, i) {
               final s = _shapes[i];
-              return _ShapeTile(label: s.label, seed: s.seed, shape: s.shape);
+              return _ShapeTile(label: s.label, photoUrl: s.photoUrl, shape: s.shape);
             },
           ),
         ],
@@ -314,13 +271,9 @@ class _ShapeGrid extends StatelessWidget {
 
 class _ShapeTile extends StatefulWidget {
   final String label;
-  final String seed;
+  final String photoUrl;
   final FrameShape shape;
-  const _ShapeTile({
-    required this.label,
-    required this.seed,
-    required this.shape,
-  });
+  const _ShapeTile({required this.label, required this.photoUrl, required this.shape});
 
   @override
   State<_ShapeTile> createState() => _ShapeTileState();
@@ -343,10 +296,7 @@ class _ShapeTileState extends State<_ShapeTile> {
             AnimatedScale(
               scale: _hovering ? 1.06 : 1.0,
               duration: const Duration(milliseconds: 320),
-              child: GoImage(
-                url:
-                    'https://picsum.photos/seed/${widget.seed}/700/900?grayscale',
-              ),
+              child: GoImage(url: UnsplashPhotos.sized(widget.photoUrl, width: 700, height: 900, grayscale: true)),
             ),
             Container(
               decoration: BoxDecoration(
@@ -363,26 +313,12 @@ class _ShapeTileState extends State<_ShapeTile> {
               right: 18,
               child: Row(
                 children: [
-                  Text(
-                    widget.label,
-                    style: AppTypography.wordmark(
-                      color: AppColors.bone,
-                      size: 18,
-                    ),
-                  ),
+                  Text(widget.label, style: AppTypography.wordmark(color: AppColors.bone, size: 18)),
                   const Spacer(),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 220),
-                    transform: Matrix4.translationValues(
-                      _hovering ? 6 : 0,
-                      0,
-                      0,
-                    ),
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: AppColors.bone,
-                      size: 20,
-                    ),
+                    transform: Matrix4.translationValues(_hovering ? 6 : 0, 0, 0),
+                    child: const Icon(Icons.arrow_forward, color: AppColors.bone, size: 20),
                   ),
                 ],
               ),
@@ -398,20 +334,17 @@ class _LensTech extends StatelessWidget {
   static const _points = [
     (
       title: 'UV400 PROTECTION',
-      body:
-          'Every lens blocks 100% of UVA and UVB rays — tested, not '
+      body: 'Every lens blocks 100% of UVA and UVB rays — tested, not '
           'just tinted.',
     ),
     (
       title: 'POLARIZED CLARITY',
-      body:
-          'Cuts glare off water, glass, and asphalt without dulling '
+      body: 'Cuts glare off water, glass, and asphalt without dulling '
           'true color.',
     ),
     (
       title: 'SCRATCH-RESISTANT COAT',
-      body:
-          'A hard coat on every lens, so the frame ages faster than '
+      body: 'A hard coat on every lens, so the frame ages faster than '
           'the glass does.',
     ),
   ];
@@ -421,31 +354,19 @@ class _LensTech extends StatelessWidget {
     final gutter = Responsive.gutter(context);
     final isDesktop = Responsive.isDesktop(context);
 
-    final blocks =
-        _points
-            .map(
-              (p) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(width: 32, height: 3, color: AppColors.signal),
-                  const SizedBox(height: 18),
-                  Text(
-                    p.title,
-                    style: AppTypography.kinetic(
-                      color: AppColors.bone,
-                      size: 13,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    p.body,
-                    style: AppTypography.body(color: AppColors.chrome),
-                  ),
-                ],
-              ),
-            )
-            .toList();
+    final blocks = _points
+        .map((p) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(width: 32, height: 3, color: AppColors.signal),
+                const SizedBox(height: 18),
+                Text(p.title, style: AppTypography.kinetic(color: AppColors.bone, size: 13)),
+                const SizedBox(height: 12),
+                Text(p.body, style: AppTypography.body(color: AppColors.chrome)),
+              ],
+            ))
+        .toList();
 
     return Container(
       color: AppColors.ink,
@@ -458,30 +379,14 @@ class _LensTech extends StatelessWidget {
           if (isDesktop)
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  blocks
-                      .map(
-                        (b) => Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 40),
-                            child: b,
-                          ),
-                        ),
-                      )
-                      .toList(),
+              children: blocks
+                  .map((b) => Expanded(child: Padding(padding: const EdgeInsets.only(right: 40), child: b)))
+                  .toList(),
             )
           else
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  blocks
-                      .map(
-                        (b) => Padding(
-                          padding: const EdgeInsets.only(bottom: 32),
-                          child: b,
-                        ),
-                      )
-                      .toList(),
+              children: blocks.map((b) => Padding(padding: const EdgeInsets.only(bottom: 32), child: b)).toList(),
             ),
         ],
       ),
@@ -507,10 +412,7 @@ class _Featured extends GetView<HomeController> {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  'This Season\'s Frames',
-                  style: AppTypography.headline(size: 36),
-                ),
+                child: Text('This Season\'s Frames', style: AppTypography.headline(size: 36)),
               ),
               if (Responsive.isDesktop(context))
                 GoButton(
@@ -563,10 +465,7 @@ class _EditorialTeaser extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            GoImage(
-              url:
-                  'https://picsum.photos/seed/${HomeController.editorialImageSeed}/1600/1000?grayscale',
-            ),
+            GoImage(url: UnsplashPhotos.sized(HomeController.editorialImageUrl, width: 1600, height: 1000, grayscale: true)),
             Container(color: AppColors.ink.withOpacity(0.55)),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: gutter),
@@ -574,17 +473,11 @@ class _EditorialTeaser extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SectionLabel(
-                    text: 'SS26 EDITORIAL',
-                    color: AppColors.bone,
-                  ),
+                  const SectionLabel(text: 'SS26 EDITORIAL', color: AppColors.bone),
                   const SizedBox(height: 18),
                   Text(
                     'THE LOOKBOOK',
-                    style: AppTypography.display(
-                      color: AppColors.bone,
-                      size: isDesktop ? 64 : 40,
-                    ),
+                    style: AppTypography.display(color: AppColors.bone, size: isDesktop ? 64 : 40),
                   ),
                   const SizedBox(height: 28),
                   GoButton(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/product_model.dart';
 import '../../../data/repositories/product_repository.dart';
+import '../../../data/unsplash_photos.dart';
 
 class HomeController extends GetxController {
   final ScrollController scrollController = ScrollController();
@@ -9,8 +10,9 @@ class HomeController extends GetxController {
 
   List<ProductModel> get featured => ProductRepository.to.featured(count: 4);
 
-  static const heroImageSeed = 'go-eyewear-hero-main';
-  static const editorialImageSeed = 'go-eyewear-editorial-teaser';
+  // "motion blur", "editorial" — a near-perfect match for the brand line.
+  static const heroImageUrl = UnsplashPhotos.roundOrangeMotion;
+  static const editorialImageUrl = UnsplashPhotos.closeUpNeonLights;
 
   @override
   void onInit() {

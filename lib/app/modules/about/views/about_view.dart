@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../data/unsplash_photos.dart';
 import '../../../global_widgets/diagonal_clipper.dart';
 import '../../../global_widgets/go_image.dart';
 import '../../../global_widgets/nav_bar.dart';
@@ -69,7 +70,7 @@ class AboutView extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    const GoImage(url: 'https://picsum.photos/seed/go-eyewear-about-hero/1600/1000?grayscale'),
+                    GoImage(url: UnsplashPhotos.sized(UnsplashPhotos.bwPortraitWithHat, width: 1600, height: 1000, grayscale: true)),
                     Container(color: AppColors.ink.withOpacity(0.6)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: gutter),
