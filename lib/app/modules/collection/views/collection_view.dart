@@ -33,39 +33,47 @@ class CollectionView extends GetView<CollectionController> {
                 children: [
                   const SectionLabel(text: 'THE COLLECTION'),
                   const SizedBox(height: 16),
-                  Text('Every Frame,\nBuilt to Move.', style: AppTypography.headline(size: 44)),
+                  Text(
+                    'Every Frame,\nBuilt to Move.',
+                    style: AppTypography.headline(size: 44),
+                  ),
                   const SizedBox(height: 32),
-                  Obx(() => Wrap(
-                        spacing: 12,
-                        runSpacing: 12,
-                        children: [
-                          _FilterChip(
-                            label: 'ALL',
-                            active: controller.selected.value == null,
-                            onTap: () => controller.select(null),
-                          ),
-                          _FilterChip(
-                            label: 'AVIATOR',
-                            active: controller.selected.value == FrameShape.aviator,
-                            onTap: () => controller.select(FrameShape.aviator),
-                          ),
-                          _FilterChip(
-                            label: 'ROUND',
-                            active: controller.selected.value == FrameShape.round,
-                            onTap: () => controller.select(FrameShape.round),
-                          ),
-                          _FilterChip(
-                            label: 'CAT-EYE',
-                            active: controller.selected.value == FrameShape.catEye,
-                            onTap: () => controller.select(FrameShape.catEye),
-                          ),
-                          _FilterChip(
-                            label: 'RECTANGLE',
-                            active: controller.selected.value == FrameShape.rectangle,
-                            onTap: () => controller.select(FrameShape.rectangle),
-                          ),
-                        ],
-                      )),
+                  Obx(
+                    () => Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: [
+                        _FilterChip(
+                          label: 'ALL',
+                          active: controller.selected.value == null,
+                          onTap: () => controller.select(null),
+                        ),
+                        _FilterChip(
+                          label: 'AVIATOR',
+                          active:
+                              controller.selected.value == FrameShape.aviator,
+                          onTap: () => controller.select(FrameShape.aviator),
+                        ),
+                        _FilterChip(
+                          label: 'ROUND',
+                          active: controller.selected.value == FrameShape.round,
+                          onTap: () => controller.select(FrameShape.round),
+                        ),
+                        _FilterChip(
+                          label: 'CAT-EYE',
+                          active:
+                              controller.selected.value == FrameShape.catEye,
+                          onTap: () => controller.select(FrameShape.catEye),
+                        ),
+                        _FilterChip(
+                          label: 'RECTANGLE',
+                          active:
+                              controller.selected.value == FrameShape.rectangle,
+                          onTap: () => controller.select(FrameShape.rectangle),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -77,7 +85,10 @@ class CollectionView extends GetView<CollectionController> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 80),
                     child: Center(
-                      child: Text('No frames in this line yet.', style: AppTypography.body()),
+                      child: Text(
+                        'No frames in this line yet.',
+                        style: AppTypography.body(),
+                      ),
                     ),
                   );
                 }
@@ -87,11 +98,12 @@ class CollectionView extends GetView<CollectionController> {
                   itemCount: products.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: columns,
-                    mainAxisSpacing: 40,
+                    mainAxisSpacing: 32,
                     crossAxisSpacing: 28,
-                    childAspectRatio: 0.72,
+                    childAspectRatio: 0.65,
                   ),
-                  itemBuilder: (context, i) => ProductCard(product: products[i]),
+                  itemBuilder:
+                      (context, i) => ProductCard(product: products[i]),
                 );
               }),
             ),
@@ -107,7 +119,11 @@ class _FilterChip extends StatelessWidget {
   final String label;
   final bool active;
   final VoidCallback onTap;
-  const _FilterChip({required this.label, required this.active, required this.onTap});
+  const _FilterChip({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
